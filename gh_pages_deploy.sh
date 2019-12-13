@@ -36,9 +36,13 @@ else
   REMOTE_NAME="${REMOTE_NAME}"
 fi
 
-git clone -b ${DEPLOY_BRANCH} --single-branch ${REPO_URL} /out
+tmp_dir=$(mktemp -d -t ci-$(date +%Y-%m-%d-%H-%M-%S)-XXXXXXXXXX)
 
-cd /out
+echo $tmp_dir
+
+git clone -b ${DEPLOY_BRANCH} --single-branch ${REPO_URL} $tmp_dir
+
+cd $tmp_dir
 
 cp -aR ${WORKSPACE}/* .
 
